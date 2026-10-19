@@ -1,0 +1,157 @@
+package Project;
+
+import java.util.PriorityQueue;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Patient {
+
+    int patientId;
+    String name;
+    int priority;
+
+    Patient(int patientId, String name, int priority) {
+        this.patientId = patientId;
+        this.name = name;
+        this.priority = priority;
+    }
+
+    public String toString() {
+        return "Patient ID: " + patientId
+                + ", Name: " + name
+                + ", Priority: " + priority;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        PriorityQueue<Patient> patients =new PriorityQueue<>(Comparator.comparingInt(p -> p.priority) );
+
+        int choice;
+
+        do {
+            System.out.println("\n--- OPD PATIENT MANAGEMENT ---");
+            System.out.println("1. Register Patient");
+            System.out.println("2. Call Next Patient");
+            System.out.println("3. View Next Patient");
+            System.out.println("4. Display Waiting Patients");
+            System.out.println("5. Search Patient");
+            System.out.println("6. Count Waiting Patients");
+            System.out.println("7. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    // TODO: Read patient ID, name and priority.
+                    // Validate priority between 1 and 3.
+                    // Create a Patient object and insert it
+                    // into the PriorityQueue.
+                	System.out.println("Enter the patient id :");
+                	int id = sc.nextInt();
+                	System.out.println("Enter the patient name  :");
+                	String name = sc.next();
+                	System.out.println("Enter the patient priority :");
+                	int priority = sc.nextInt();
+                	if(priority == 1 || priority == 2 || priority == 3) {
+                		Patient pat = new Patient(id ,name , priority);
+                    	patients.offer(pat);
+                    	System.out.println("Patient registered successfully ");
+                	}
+                	else {
+                		System.out.println("give proper priority ");
+                	}
+                    break;
+
+                case 2:
+                    // TODO: Check whether the queue is empty.
+                    // Remove and display the highest-priority
+                    // patient using poll().
+                	if(!patients.isEmpty()) {
+                	System.out.println(patients.poll());	
+                	}
+                	else {
+                		System.out.println("there are no patients");
+                	}
+                    break;
+
+                case 3:
+                    // TODO: Display the highest-priority patient
+                    // using peek(), without removing them.
+                	if(!patients.isEmpty()) {
+                	System.out.println(patients.peek());	
+                	}
+                	else {
+                		System.out.println("there are no patients");
+                	}
+                    break;
+
+                case 4:
+                    // TODO: Create a temporary copy of the queue.
+                    // Repeatedly poll and display patients
+                    // in priority order.
+                	 PriorityQueue<Patient> waitingpatients = new PriorityQueue<>(patients); 
+                	if(!waitingpatients.isEmpty()) {
+                		while(!waitingpatients.isEmpty()) {
+                    		System.out.print(waitingpatients.poll()+" ");
+                    	}
+                	}
+                	else {
+                		System.out.println("there are no patients ");
+                	}
+                    break;
+
+                case 5:
+                    // TODO: Read a patient ID and search
+                    // for the patient in the queue.
+                	System.out.print("Enter a patient id to be searched :");
+                	int search = sc.nextInt();
+                	
+                	if(!patients.isEmpty()) {
+                		boolean flag = true;
+                		for(Patient p : patients) {
+                			if(p.patientId == search) {
+                				System.out.println(p);
+                				flag = false;
+                				break;
+                			}
+                			}
+                		if(flag) {
+                			System.out.println("No patient found ");
+                		}
+                	}
+                	else {
+                		System.out.println("the queue is empty ");
+                	}
+                    break;
+
+                case 6:
+                    // TODO: Display the number of waiting patients.
+                	if(!patients.isEmpty()) {
+                		System.out.println(patients.size());
+                	}
+                	else {
+                		System.out.println("no patients waiting ");
+                	}
+                    break;
+
+                case 7:
+                    System.out.println("Program terminated.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+            }
+
+        } while (choice != 7);
+
+        sc.close();
+    }
+}
+
