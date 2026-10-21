@@ -15,7 +15,7 @@ class Circular_Adt{
 	}
 	void enqueue(int e) {
 		rear = (rear+ 1)%MaxSize;
-		circular_queue[++rear] = e;
+		circular_queue[rear] = e;
 		count++;
 	}
 	boolean isFull() {
@@ -24,7 +24,9 @@ class Circular_Adt{
 	int dequeue() {
 		int temp = circular_queue[front];
 		front = (front+1 )% MaxSize ;
+		count--;
 		return(temp);
+		
 	}
 	boolean isEmpty() {
 		return (front>rear);
@@ -73,8 +75,7 @@ public class Circular_queue {
 
                 case 2:
                 	if(!qc.isEmpty()) {
-                		System.out.println("Enter the element to bedelete element in queue");
-                		qc.dequeue();
+                		System.out.println(qc.dequeue());
                 	}
                 	else {
                 		System.out.println("error the queue is empty");
